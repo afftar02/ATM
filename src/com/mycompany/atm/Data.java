@@ -1,4 +1,4 @@
-package com.mycompany.cash_machine;
+package com.mycompany.atm;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
