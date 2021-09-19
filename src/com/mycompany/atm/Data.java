@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class Data implements Saver{
+public class Data implements DataProcessor{
     static ArrayList<Card> cards= new ArrayList<Card>();
 
     public void read(){

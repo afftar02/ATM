@@ -3,7 +3,7 @@ package com.mycompany.atm;
 public class Main {
 
     public static void main(String[] args){
-        Data dataBase = new Data();
+        DataProcessor dataBase = new Data();
         dataBase.read();
         Card card = CashMachine.cardNumberAndPinCodeInput();
         if(card!=null) {
