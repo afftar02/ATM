@@ -1,4 +1,8 @@
-package com.mycompany.atm;
+package com.mycompany.atm.blocking;
+
+import com.mycompany.atm.view.View;
+import com.mycompany.atm.card.BlockedCard;
+import com.mycompany.atm.card.Card;
 
 import java.util.Date;
 import java.util.Calendar;

@@ -1,16 +1,31 @@
 package com.mycompany.atm;
 
+import com.mycompany.atm.card.BlockedCard;
+import com.mycompany.atm.card.Card;
+import com.mycompany.atm.data.Data;
+import com.mycompany.atm.data.DataProcessor;
+import com.mycompany.atm.view.View;
+
 public class Main {
 
     public static void main(String[] args){
         DataProcessor dataBase = new Data();
-        dataBase.read();
-        Card card = CashMachine.cardNumberAndPinCodeInput();
-        if(card!=null) {
-            if(card.getClass()!=BlockedCard.class) {
-                View.afterAuthorizationMenu(card);
+        if(dataBase.read()) {
+            View.successfulDataReadNotification();
+            Card card = Atm.start();
+            if (card != null) {
+                if (card.getClass() != BlockedCard.class) {
+                    View.afterAuthorizationMenu(card);
+                }
+                if (dataBase.save(card)) {
+                    View.successfulDataSaveNotification();
+                } else {
+                    View.unsuccessfulDataSaveNotification();
+                }
             }
-            dataBase.save(card);
+        }
+        else{
+            View.unsuccessfulDataReadNotification();
         }
     }
 }

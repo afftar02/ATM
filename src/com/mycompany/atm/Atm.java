@@ -1,39 +1,32 @@
 package com.mycompany.atm;
 
+import com.mycompany.atm.blocking.BlockingControl;
+import com.mycompany.atm.card.BlockedCard;
+import com.mycompany.atm.card.Card;
+import com.mycompany.atm.data.Data;
+import com.mycompany.atm.input.MyScanner;
+import com.mycompany.atm.view.View;
+
 import java.util.Date;
 
-public class CashMachine {
-    static double moneyLimit;
+public class Atm {
+    public static double moneyLimit;
 
-    private static Card tryToInputPinCode(Card card){
-        int pinCodeInput = 0;
-        do {
-            PinCode pinCode = PinCode.input();
-            if (pinCode!=null && pinCode.isCorrect(card)) {
-                View.successfulAuthorizationNotification();
-                return card;
-            }
-            pinCodeInput++;
-        } while (pinCodeInput < 3);
-        BlockedCard blockedCard = BlockingControl.block(card);
-        return blockedCard;
-    }
-
-    public static Card cardNumberAndPinCodeInput(){
+    public static Card start(){
         do {
             if(View.firstMenu()){
                 return null;
             }
-            Card card = new Card(CardNumber.input());
+            Card card = new Card(MyScanner.inputCardNumber());
             if (card.number.isCorrectFormat() && card.number.isExists()) {
                 card = Data.dataGetting(card);
-                if (card.getClass()!=BlockedCard.class) {
-                    card = tryToInputPinCode(card);
+                if (card.getClass()!= BlockedCard.class) {
+                    card = MyScanner.tryToInputPinCode(card);
                     return card;
                 } else {
                     if (BlockingControl.isBlockTimeOver((BlockedCard) card)) {
                         card = BlockingControl.unblock((BlockedCard) card);
-                        card = tryToInputPinCode(card);
+                        card = MyScanner.tryToInputPinCode(card);
                         return card;
                     } else {
                         Date now = new Date();

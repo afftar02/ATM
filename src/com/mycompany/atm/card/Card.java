@@ -1,9 +1,13 @@
-package com.mycompany.atm;
+package com.mycompany.atm.card;
+
+import com.mycompany.atm.card.information.Account;
+import com.mycompany.atm.card.information.CardNumber;
+import com.mycompany.atm.card.information.PinCode;
 
 public class Card {
-    CardNumber number=new CardNumber();
-    Account account=new Account();
-    PinCode pinCode=new PinCode();
+    public CardNumber number=new CardNumber();
+    public Account account=new Account();
+    public PinCode pinCode=new PinCode();
 
     public Card(String cardNumber,String pinCode, double moneyCount){
         number.value = cardNumber;

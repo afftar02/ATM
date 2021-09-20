@@ -1,23 +1,14 @@
-package com.mycompany.atm;
+package com.mycompany.atm.card.information;
 
-import java.util.Scanner;
+import com.mycompany.atm.data.Data;
+import com.mycompany.atm.view.View;
+import com.mycompany.atm.card.Card;
 
 public class CardNumber {
-    String value;
+    public String value;
 
-    public static CardNumber input(){
-        do {
-            try {
-                Scanner in = new Scanner(System.in);
-                View.inputNotification("номер");
-                String number = in.nextLine();
-                CardNumber cardNumber = new CardNumber();
-                cardNumber.value=number;
-                return cardNumber;
-            } catch (Exception e) {
-                View.incorrectInputNotification("Номер");
-            }
-        }while(true);
+    public CardNumber(){
+
     }
 
     public boolean isCorrectFormat(){
@@ -43,7 +34,7 @@ public class CardNumber {
     }
 
     public boolean isExists(){
-        for (Card card:Data.cards) {
+        for (Card card: Data.cards) {
             if(this.value.equals(card.number.value)){
                 return true;
             }

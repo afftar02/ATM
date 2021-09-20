@@ -1,4 +1,6 @@
-package com.mycompany.atm;
+package com.mycompany.atm.view;
+
+import com.mycompany.atm.card.Card;
 
 import java.util.Scanner;
 
@@ -126,5 +128,21 @@ public class View {
 
     public static void addMoneyLimitExceededNotification(){
         System.out.println("Вы превысили сумму пополнения баланса(сумма пополнения не должна превышать 1 000 000!)");
+    }
+
+    public static void successfulDataReadNotification(){
+        System.out.println("Чтение данных прошло успешно!");
+    }
+
+    public static void successfulDataSaveNotification(){
+        System.out.println("Сохранение данных прошло!");
+    }
+
+    public static void unsuccessfulDataReadNotification(){
+        System.out.println("Данные были прочитаны некорректно!");
+    }
+
+    public static void unsuccessfulDataSaveNotification(){
+        System.out.println("Данные не были сохранены!");
     }
 }

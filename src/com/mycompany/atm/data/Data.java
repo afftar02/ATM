@@ -1,4 +1,8 @@
-package com.mycompany.atm;
+package com.mycompany.atm.data;
+
+import com.mycompany.atm.Atm;
+import com.mycompany.atm.card.BlockedCard;
+import com.mycompany.atm.card.Card;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,15 +13,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class Data implements DataProcessor{
-    static ArrayList<Card> cards= new ArrayList<Card>();
+public class Data implements DataProcessor {
+    public static ArrayList<Card> cards= new ArrayList<Card>();
 
-    public void read(){
+    public boolean read(){
         try {
             FileReader fileReader = new FileReader("Data.txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line = bufferedReader.readLine();
-            CashMachine.moneyLimit = Double.parseDouble(line);
+            Atm.moneyLimit = Double.parseDouble(line);
             while(line!=null){
                 line = bufferedReader.readLine();
                 if (line!=null) {
@@ -33,16 +37,18 @@ public class Data implements DataProcessor{
                     }
                 }
             }
+            return true;
         }
         catch(Exception e){
             System.out.println(e.getMessage());
+            return false;
         }
     }
 
-    public void save(Card card){
+    public boolean save(Card card){
         try{
             FileWriter fileWriter = new FileWriter("Data.txt",false);
-            fileWriter.write(Double.toString(CashMachine.moneyLimit)+'\n');
+            fileWriter.write(Double.toString(Atm.moneyLimit)+'\n');
             for(Card cardFromDB:cards){
                 if(cardFromDB.number.value.equals(card.number.value)){
                     cardFromDB=card;
@@ -57,9 +63,11 @@ public class Data implements DataProcessor{
                 fileWriter.write(cardData);
             }
             fileWriter.flush();
+            return true;
         }
         catch(Exception e){
             System.out.println(e.getMessage());
+            return false;
         }
     }
 
