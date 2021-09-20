@@ -5,7 +5,18 @@ import com.mycompany.atm.view.View;
 import com.mycompany.atm.card.Card;
 
 public class CardNumber {
-    public String value;
+    private String value;
+
+    public String getValue(){
+        return value;
+    }
+    private void setValue(String value){
+        this.value = value;
+    }
+
+    public CardNumber(String value){
+        this.value = value;
+    }
 
     public CardNumber(){
 
@@ -34,8 +45,8 @@ public class CardNumber {
     }
 
     public boolean isExists(){
-        for (Card card: Data.cards) {
-            if(this.value.equals(card.number.value)){
+        for (Card card: Data.getCards()) {
+            if(this.getValue().equals(card.getNumber().value)){
                 return true;
             }
         }

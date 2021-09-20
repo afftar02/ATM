@@ -10,7 +10,26 @@ import com.mycompany.atm.view.View;
 import java.util.Date;
 
 public class Atm {
-    public static double moneyLimit;
+    private static double moneyLimit;
+
+    public static double getMoneyLimit(){
+        return moneyLimit;
+    }
+    private static void setMoneyLimit(double value){
+        moneyLimit = value;
+    }
+
+    public static void decreaseMoneyLimit(double money){
+        moneyLimit -= money;
+    }
+
+    public static void increaseMoneyLimit(double money){
+        moneyLimit += money;
+    }
+
+    public Atm(double money){
+        setMoneyLimit(money);
+    }
 
     public static Card start(){
         do {
@@ -18,7 +37,7 @@ public class Atm {
                 return null;
             }
             Card card = new Card(MyScanner.inputCardNumber());
-            if (card.number.isCorrectFormat() && card.number.isExists()) {
+            if (card.getNumber().isCorrectFormat() && card.getNumber().isExists()) {
                 card = Data.dataGetting(card);
                 if (card.getClass()!= BlockedCard.class) {
                     card = MyScanner.tryToInputPinCode(card);
@@ -30,11 +49,11 @@ public class Atm {
                         return card;
                     } else {
                         Date now = new Date();
-                        long timeLeft = ((BlockedCard)card).unblockingTime.getTime()-now.getTime();
+                        long timeLeft = ((BlockedCard)card).getUnblockingTime().getTime()-now.getTime();
                         View.timeToUnblockNotification(timeLeft);
                     }
                 }
-            } else if (!card.number.isCorrectFormat()) {
+            } else if (!card.getNumber().isCorrectFormat()) {
                 View.incorrectCardNumberFormatNotification();
             }
         }while(true);

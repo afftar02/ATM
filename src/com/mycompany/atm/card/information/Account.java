@@ -6,19 +6,30 @@ import com.mycompany.atm.view.View;
 public class Account {
     final int ADDING_MONEY_LIMIT = 1000000;
 
-    public double moneyCount;
+    private double moneyCount;
+
+    public double getMoneyCount(){
+        return moneyCount;
+    }
+    private void setMoneyCount(double value){
+        moneyCount = value;
+    }
 
     public Account(){
-        moneyCount = 0.0;
+        this.moneyCount = 0.0;
+    }
+
+    public Account(double money){
+        this.moneyCount = money;
     }
 
     public void takeMoney(double moneyCount){
-        if(moneyCount<=this.moneyCount && moneyCount<= Atm.moneyLimit) {
+        if(moneyCount<=this.getMoneyCount() && moneyCount<= Atm.getMoneyLimit()) {
             View.successfulTakeMoneyNotification(moneyCount);
             this.moneyCount -= moneyCount;
-            Atm.moneyLimit -= moneyCount;
+            Atm.decreaseMoneyLimit(moneyCount);
         }
-        else if(moneyCount>this.moneyCount){
+        else if(moneyCount>this.getMoneyCount()){
             View.notEnoughAccountMoneyNotification(moneyCount);
         }
         else{
@@ -30,7 +41,7 @@ public class Account {
         if(moneyCount <= ADDING_MONEY_LIMIT) {
             View.successfulAddMoneyNotification(moneyCount);
             this.moneyCount += moneyCount;
-            Atm.moneyLimit += moneyCount;
+            Atm.increaseMoneyLimit(moneyCount);
         }
         else{
             View.addMoneyLimitExceededNotification();
@@ -38,6 +49,6 @@ public class Account {
     }
 
     public void checkBalance(){
-        View.balanceOutput(this.moneyCount);
+        View.balanceOutput(this.getMoneyCount());
     }
 }

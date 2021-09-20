@@ -16,8 +16,7 @@ public class MyScanner {
                 Scanner in = new Scanner(System.in);
                 View.inputNotification("номер");
                 String number = in.nextLine();
-                CardNumber cardNumber = new CardNumber();
-                cardNumber.value=number;
+                CardNumber cardNumber = new CardNumber(number);
                 return cardNumber;
             } catch (Exception e) {
                 View.incorrectInputNotification("Номер");
@@ -26,17 +25,23 @@ public class MyScanner {
     }
 
     public static Card tryToInputPinCode(Card card){
-        int pinCodeInput = 0;
-        do {
-            PinCode pinCode = inputPinCode();
-            if (pinCode!=null && pinCode.isCorrect(card)) {
-                View.successfulAuthorizationNotification();
-                return card;
-            }
-            pinCodeInput++;
-        } while (pinCodeInput < 3);
-        BlockedCard blockedCard = BlockingControl.block(card);
-        return blockedCard;
+        try {
+            int pinCodeInput = 0;
+            do {
+                PinCode pinCode = inputPinCode();
+                if (pinCode != null && pinCode.isCorrect(card)) {
+                    View.successfulAuthorizationNotification();
+                    return card;
+                }
+                pinCodeInput++;
+            } while (pinCodeInput < 3);
+            BlockedCard blockedCard = BlockingControl.block(card);
+            return blockedCard;
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     public static PinCode inputPinCode(){
@@ -44,7 +49,7 @@ public class MyScanner {
             Scanner in = new Scanner(System.in);
             View.inputNotification("пин-код");
             PinCode pinCode = new PinCode();
-            pinCode.value = in.nextInt();
+            pinCode = new PinCode(in.nextInt());
             return pinCode;
         }
         catch (Exception e){

@@ -3,6 +3,9 @@ package com.mycompany.atm.data;
 import com.mycompany.atm.Atm;
 import com.mycompany.atm.card.BlockedCard;
 import com.mycompany.atm.card.Card;
+import com.mycompany.atm.card.information.Account;
+import com.mycompany.atm.card.information.CardNumber;
+import com.mycompany.atm.card.information.PinCode;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -16,14 +19,21 @@ import java.util.Locale;
 public class Data implements DataProcessor {
     final String PATH = "Data.txt";
 
-    public static ArrayList<Card> cards= new ArrayList<Card>();
+    private static ArrayList<Card> cards= new ArrayList<Card>();
+
+    public static ArrayList<Card> getCards(){
+        return cards;
+    }
+    private static void setCards(ArrayList<Card> value){
+        cards = value;
+    }
 
     public boolean read(){
         try {
             FileReader fileReader = new FileReader(PATH);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line = bufferedReader.readLine();
-            Atm.moneyLimit = Double.parseDouble(line);
+            Atm atm = new Atm(Double.parseDouble(line));
             while(line!=null){
                 line = bufferedReader.readLine();
                 if (line!=null) {
@@ -50,14 +60,14 @@ public class Data implements DataProcessor {
     public boolean save(Card card){
         try{
             FileWriter fileWriter = new FileWriter(PATH,false);
-            fileWriter.write(Double.toString(Atm.moneyLimit)+'\n');
-            for(Card cardFromDB:cards){
-                if(cardFromDB.number.value.equals(card.number.value)){
+            fileWriter.write(Double.toString(Atm.getMoneyLimit())+'\n');
+            for(Card cardFromDB:getCards()){
+                if(cardFromDB.getNumber().getValue().equals(card.getNumber().getValue())){
                     cardFromDB=card;
                 }
-                String cardData = cardFromDB.number.value + ' ' + Integer.toString(cardFromDB.pinCode.value) + ' ' + Double.toString(cardFromDB.account.moneyCount);
+                String cardData = cardFromDB.getNumber().getValue() + ' ' + Integer.toString(cardFromDB.getPinCode().getValue()) + ' ' + Double.toString(cardFromDB.getAccount().getMoneyCount());
                 if(cardFromDB.getClass() == BlockedCard.class) {
-                    cardData += (" " + ((BlockedCard) cardFromDB).unblockingTime + "\n");
+                    cardData += (" " + ((BlockedCard) cardFromDB).getUnblockingTime() + "\n");
                 }
                 else{
                     cardData += "\n";
@@ -74,15 +84,12 @@ public class Data implements DataProcessor {
     }
 
     public static Card dataGetting(Card card){
-        for(Card cardFromDB:Data.cards){
-            if(cardFromDB.number.value.equals(card.number.value)){
+        for(Card cardFromDB:Data.getCards()){
+            if(cardFromDB.getNumber().getValue().equals(card.getNumber().getValue())){
                 try {
-                    card.number.value = cardFromDB.number.value;
-                    card.account.moneyCount = cardFromDB.account.moneyCount;
-                    card.pinCode.value = cardFromDB.pinCode.value;
+                    card = new Card(cardFromDB.getNumber().getValue(),cardFromDB.getPinCode().getValue(),cardFromDB.getAccount().getMoneyCount());
                     if(cardFromDB.getClass()==BlockedCard.class){
-                        BlockedCard blockedCard = new BlockedCard(card);
-                        blockedCard.unblockingTime=((BlockedCard) cardFromDB).unblockingTime;
+                        BlockedCard blockedCard = new BlockedCard(((BlockedCard) cardFromDB).getUnblockingTime(),card);
                         return blockedCard;
                     }
                 }

@@ -1,22 +1,33 @@
 package com.mycompany.atm.card;
 
 import com.mycompany.atm.card.Card;
+import com.mycompany.atm.card.information.Account;
+import com.mycompany.atm.card.information.CardNumber;
+import com.mycompany.atm.card.information.PinCode;
 
 import java.util.Date;
 
 public class BlockedCard extends Card {
-    public Date unblockingTime = new Date();
+    private Date unblockingTime = new Date();
 
-    public BlockedCard(String cardNumber,String pinCode, double moneyCount, Date time){
-        number.value = cardNumber;
-        this.pinCode.value = Integer.parseInt(pinCode);
-        account.moneyCount = moneyCount;
-        this.unblockingTime=time;
+    public Date getUnblockingTime(){
+        return unblockingTime;
+    }
+    private void setUnblockingTime(Date value){
+        unblockingTime = value;
     }
 
-    public BlockedCard(Card card){
-        number.value = card.number.value;
-        this.pinCode.value = card.pinCode.value;
-        account.moneyCount = card.account.moneyCount;
+    public BlockedCard(String cardNumber,String pinCode, double moneyCount, Date time){
+        this.number = new CardNumber(cardNumber);
+        this.pinCode = new PinCode(Integer.parseInt(pinCode));
+        this.account = new Account(moneyCount);
+        this.unblockingTime = time;
+    }
+
+    public BlockedCard(Date unblockingTime, Card card){
+        this.number = new CardNumber(card.getNumber().getValue());
+        this.pinCode = new PinCode(card.getPinCode().getValue());
+        this.account = new Account(card.getAccount().getMoneyCount());
+        this.unblockingTime = unblockingTime;
     }
 }

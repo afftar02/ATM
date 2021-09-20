@@ -35,14 +35,14 @@ public class View {
                 int choice = menuIn.nextInt();
                 switch (choice) {
                     case 1:
-                        card.account.checkBalance();
+                        card.getAccount().checkBalance();
                         break;
                     case 2:
                         try {
                             System.out.print("Введите сумму: ");
                             Scanner takingMoneyIn = new Scanner(System.in);
                             double takingMoneyCount = takingMoneyIn.nextDouble();
-                            card.account.takeMoney(takingMoneyCount);
+                            card.getAccount().takeMoney(takingMoneyCount);
                         } catch (Exception e) {
                             System.out.println("Данные введены некорректно. Возможно, вы ввели сумму в неверном формате.");
                         }
@@ -52,7 +52,7 @@ public class View {
                             System.out.print("Введите сумму: ");
                             Scanner addingMoneyIn = new Scanner(System.in);
                             double addingMoneyCount = addingMoneyIn.nextDouble();
-                            card.account.addMoney(addingMoneyCount);
+                            card.getAccount().addMoney(addingMoneyCount);
                         } catch (Exception e) {
                             System.out.println("Данные введены некорректно. Возможно, вы ввели сумму в неверном формате.");
                         }

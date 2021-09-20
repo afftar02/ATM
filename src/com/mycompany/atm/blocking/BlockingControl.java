@@ -11,21 +11,34 @@ public abstract class BlockingControl {
     private static Date taskDate;
     private static Date currentDate;
 
+    public static Date getTaskDate(){
+        return taskDate;
+    }
+    private static void setTaskDate(Date value){
+        taskDate = value;
+    }
+
+    public static Date getCurrentDate(){
+        return currentDate;
+    }
+    private static void setCurrentDate(Date value){
+        currentDate = value;
+    }
+
     public static BlockedCard block(Card card){
-        taskDate=new Date();
+        setTaskDate(new Date());
         Calendar unblockTime = Calendar.getInstance();
         unblockTime.setTime(taskDate);
         unblockTime.add(Calendar.DAY_OF_YEAR,1);
-        taskDate=unblockTime.getTime();
-        View.blockNotification(card.number.value);
-        BlockedCard blockedCard = new BlockedCard(card);
-        blockedCard.unblockingTime = taskDate;
+        setTaskDate(unblockTime.getTime());
+        View.blockNotification(card.getNumber().getValue());
+        BlockedCard blockedCard = new BlockedCard(getTaskDate(),card);
         return blockedCard;
     }
 
     public static boolean isBlockTimeOver(BlockedCard blockedCard){
-        currentDate=new Date();
-        if(currentDate.equals(blockedCard.unblockingTime) || currentDate.after(blockedCard.unblockingTime)){
+        setCurrentDate(new Date());
+        if(getCurrentDate().equals(blockedCard.getUnblockingTime()) || getCurrentDate().after(blockedCard.getUnblockingTime())){
             return true;
         }
         else{
