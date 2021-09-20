@@ -28,7 +28,7 @@ public class Atm {
     }
 
     public Atm(double money){
-        setMoneyLimit(money);
+        this.moneyLimit = money;
     }
 
     public static Card start(){
@@ -39,7 +39,7 @@ public class Atm {
             Card card = new Card(MyScanner.inputCardNumber());
             if (card.getNumber().isCorrectFormat() && card.getNumber().isExists()) {
                 card = Data.dataGetting(card);
-                if (card.getClass()!= BlockedCard.class) {
+                if (card.getClass() != BlockedCard.class) {
                     card = MyScanner.tryToInputPinCode(card);
                     return card;
                 } else {
@@ -49,7 +49,7 @@ public class Atm {
                         return card;
                     } else {
                         Date now = new Date();
-                        long timeLeft = ((BlockedCard)card).getUnblockingTime().getTime()-now.getTime();
+                        long timeLeft = ((BlockedCard)card).getUnblockingTime().getTime() - now.getTime();
                         View.timeToUnblockNotification(timeLeft);
                     }
                 }

@@ -24,12 +24,12 @@ public class Account {
     }
 
     public void takeMoney(double moneyCount){
-        if(moneyCount<=this.getMoneyCount() && moneyCount<= Atm.getMoneyLimit()) {
+        if(moneyCount <= this.getMoneyCount() && moneyCount <= Atm.getMoneyLimit()) {
             View.successfulTakeMoneyNotification(moneyCount);
             this.moneyCount -= moneyCount;
             Atm.decreaseMoneyLimit(moneyCount);
         }
-        else if(moneyCount>this.getMoneyCount()){
+        else if(moneyCount > this.getMoneyCount()){
             View.notEnoughAccountMoneyNotification(moneyCount);
         }
         else{

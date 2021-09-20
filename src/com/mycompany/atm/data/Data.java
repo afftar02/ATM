@@ -33,12 +33,12 @@ public class Data implements DataProcessor {
             FileReader fileReader = new FileReader(PATH);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line = bufferedReader.readLine();
-            Atm atm = new Atm(Double.parseDouble(line));
-            while(line!=null){
+            new Atm(Double.parseDouble(line));
+            while(line != null){
                 line = bufferedReader.readLine();
-                if (line!=null) {
+                if (line != null) {
                     String[] words = line.split(" ");
-                    if(words.length>3) {
+                    if(words.length > 3) {
                         String time = words[3] + ", " + words[4] + ' ' + words[5] + ' ' + words[8] + ' ' + words[6];
                         DateFormat dateFormat = new SimpleDateFormat("E, MMMM dd yyyy HH:mm:ss", Locale.ENGLISH);
                         Date date = dateFormat.parse(time);
@@ -60,10 +60,10 @@ public class Data implements DataProcessor {
     public boolean save(Card card){
         try{
             FileWriter fileWriter = new FileWriter(PATH,false);
-            fileWriter.write(Double.toString(Atm.getMoneyLimit())+'\n');
+            fileWriter.write(Double.toString(Atm.getMoneyLimit()) + '\n');
             for(Card cardFromDB:getCards()){
                 if(cardFromDB.getNumber().getValue().equals(card.getNumber().getValue())){
-                    cardFromDB=card;
+                    cardFromDB = card;
                 }
                 String cardData = cardFromDB.getNumber().getValue() + ' ' + Integer.toString(cardFromDB.getPinCode().getValue()) + ' ' + Double.toString(cardFromDB.getAccount().getMoneyCount());
                 if(cardFromDB.getClass() == BlockedCard.class) {
@@ -88,7 +88,7 @@ public class Data implements DataProcessor {
             if(cardFromDB.getNumber().getValue().equals(card.getNumber().getValue())){
                 try {
                     card = new Card(cardFromDB.getNumber().getValue(),cardFromDB.getPinCode().getValue(),cardFromDB.getAccount().getMoneyCount());
-                    if(cardFromDB.getClass()==BlockedCard.class){
+                    if(cardFromDB.getClass() == BlockedCard.class){
                         BlockedCard blockedCard = new BlockedCard(((BlockedCard) cardFromDB).getUnblockingTime(),card);
                         return blockedCard;
                     }

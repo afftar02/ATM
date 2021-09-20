@@ -25,15 +25,15 @@ public class CardNumber {
     public boolean isCorrectFormat(){
         //format check
         String number = this.value;
-        if(number.length()!=19){
+        if(number.length() != 19){
             return false;
         }
-        else if(number.charAt(4)!='-'||number.charAt(9)!='-'||number.charAt(14)!='-'){
+        else if(number.charAt(4) != '-' || number.charAt(9) != '-' || number.charAt(14) != '-'){
             return false;
         }
         else{
-            for(int i=0;i<number.length();i++){
-                if(i!=4 && i!=9 && i!=14){
+            for(int i = 0; i < number.length(); i++){
+                if(i != 4 && i != 9 && i != 14){
                     char symbol = number.charAt(i);
                     if(!Character.isDigit(symbol)){
                         return false;
@@ -46,7 +46,7 @@ public class CardNumber {
 
     public boolean isExists(){
         for (Card card: Data.getCards()) {
-            if(this.getValue().equals(card.getNumber().value)){
+            if(this.getValue().equals(card.getNumber().getValue())){
                 return true;
             }
         }
