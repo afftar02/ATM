@@ -14,11 +14,13 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class Data implements DataProcessor {
+    final String PATH = "Data.txt";
+
     public static ArrayList<Card> cards= new ArrayList<Card>();
 
     public boolean read(){
         try {
-            FileReader fileReader = new FileReader("Data.txt");
+            FileReader fileReader = new FileReader(PATH);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line = bufferedReader.readLine();
             Atm.moneyLimit = Double.parseDouble(line);
@@ -47,7 +49,7 @@ public class Data implements DataProcessor {
 
     public boolean save(Card card){
         try{
-            FileWriter fileWriter = new FileWriter("Data.txt",false);
+            FileWriter fileWriter = new FileWriter(PATH,false);
             fileWriter.write(Double.toString(Atm.moneyLimit)+'\n');
             for(Card cardFromDB:cards){
                 if(cardFromDB.number.value.equals(card.number.value)){
