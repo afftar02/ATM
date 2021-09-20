@@ -135,7 +135,7 @@ public class View {
     }
 
     public static void successfulDataSaveNotification(){
-        System.out.println("Сохранение данных прошло!");
+        System.out.println("Сохранение данных прошло успешно!");
     }
 
     public static void unsuccessfulDataReadNotification(){
