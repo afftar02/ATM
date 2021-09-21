@@ -26,6 +26,27 @@ public class View {
         } while (true);
     }
 
+    public static boolean pinCodeInputMenu(){
+        do {
+            try {
+                System.out.println("1-ввести пин-код еще раз\n2-выход");
+                Scanner in = new Scanner(System.in);
+                int choice = in.nextInt();
+                switch (choice) {
+                    case 1:
+                        return false;
+                    case 2:
+                        return true;
+                    default:
+                        System.out.println("Вы выбрали несуществующую функцию.");
+                }
+            }
+            catch (Exception e){
+                System.out.println("Некорректный ввод!");
+            }
+        } while (true);
+    }
+
     public static void afterAuthorizationMenu(Card card){
         boolean isOpenMenu=true;
         do{

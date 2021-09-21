@@ -8,6 +8,7 @@ public class Card {
     protected CardNumber number = new CardNumber();
     protected Account account = new Account();
     protected PinCode pinCode = new PinCode();
+    private int restOfAttempts = 3;
 
     public CardNumber getNumber(){
         return number;
@@ -30,16 +31,28 @@ public class Card {
         pinCode = value;
     }
 
-    public Card(String cardNumber,String pinCode, double moneyCount){
+    public int getRestOfAttempts(){
+        return restOfAttempts;
+    }
+    private void setRestOfAttempts(int value){
+        restOfAttempts = value;
+    }
+
+    public void decreaseRestOfAttempts(){
+        restOfAttempts--;
+    }
+
+    /*public Card(String cardNumber,String pinCode, double moneyCount){
         this.number = new CardNumber(cardNumber);
         this.pinCode = new PinCode(Integer.parseInt(pinCode));
         this.account = new Account(moneyCount);
-    }
+    }*/
 
-    public Card(String cardNumber,int pinCode, double moneyCount){
+    public Card(String cardNumber,int pinCode, double moneyCount,int restOfAttempts){
         this.number = new CardNumber(cardNumber);
         this.pinCode = new PinCode(pinCode);
         this.account = new Account(moneyCount);
+        this.restOfAttempts = restOfAttempts;
     }
 
     public Card(Card card){

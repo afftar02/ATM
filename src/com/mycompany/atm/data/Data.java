@@ -38,14 +38,14 @@ public class Data implements DataProcessor {
                 line = bufferedReader.readLine();
                 if (line != null) {
                     String[] words = line.split(" ");
-                    if(words.length > 3) {
+                    if(words.length > 4) {
                         String time = words[3] + ", " + words[4] + ' ' + words[5] + ' ' + words[8] + ' ' + words[6];
                         DateFormat dateFormat = new SimpleDateFormat("E, MMMM dd yyyy HH:mm:ss", Locale.ENGLISH);
                         Date date = dateFormat.parse(time);
                         cards.add(new BlockedCard(words[0], words[1], Double.parseDouble(words[2]), date));
                     }
-                    else if(words.length == 3){
-                        cards.add(new Card(words[0], words[1], Double.parseDouble(words[2])));
+                    else if(words.length == 4){
+                        cards.add(new Card(words[0], Integer.parseInt(words[1]), Double.parseDouble(words[2]),Integer.parseInt(words[3])));
                     }
                 }
             }
@@ -70,7 +70,7 @@ public class Data implements DataProcessor {
                     cardData += (" " + ((BlockedCard) cardFromDB).getUnblockingTime() + "\n");
                 }
                 else{
-                    cardData += "\n";
+                    cardData += (" " + Integer.toString(cardFromDB.getRestOfAttempts()) + "\n");
                 }
                 fileWriter.write(cardData);
             }
@@ -87,7 +87,7 @@ public class Data implements DataProcessor {
         for(Card cardFromDB:Data.getCards()){
             if(cardFromDB.getNumber().getValue().equals(card.getNumber().getValue())){
                 try {
-                    card = new Card(cardFromDB.getNumber().getValue(),cardFromDB.getPinCode().getValue(),cardFromDB.getAccount().getMoneyCount());
+                    card = new Card(cardFromDB.getNumber().getValue(),cardFromDB.getPinCode().getValue(),cardFromDB.getAccount().getMoneyCount(),cardFromDB.getRestOfAttempts());
                     if(cardFromDB.getClass() == BlockedCard.class){
                         BlockedCard blockedCard = new BlockedCard(((BlockedCard) cardFromDB).getUnblockingTime(),card);
                         return blockedCard;
