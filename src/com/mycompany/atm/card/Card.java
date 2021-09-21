@@ -42,11 +42,9 @@ public class Card {
         restOfAttempts--;
     }
 
-    /*public Card(String cardNumber,String pinCode, double moneyCount){
-        this.number = new CardNumber(cardNumber);
-        this.pinCode = new PinCode(Integer.parseInt(pinCode));
-        this.account = new Account(moneyCount);
-    }*/
+    public void setBaseRestOfAttempts(){
+        restOfAttempts = 3;
+    }
 
     public Card(String cardNumber,int pinCode, double moneyCount,int restOfAttempts){
         this.number = new CardNumber(cardNumber);

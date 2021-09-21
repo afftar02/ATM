@@ -24,27 +24,32 @@ public class MyScanner {
         }while(true);
     }
 
-    public static Card tryToInputPinCode(Card card){
+    public static boolean isInputPinCode(Card card){
         try {
-            do {
-                PinCode pinCode = inputPinCode();
-                if (pinCode != null && pinCode.isCorrect(card)) {
-                    View.successfulAuthorizationNotification();
-                    return card;
+            PinCode pinCode = inputPinCode();
+            if (pinCode != null && pinCode.isCorrect(card)) {
+                View.successfulAuthorizationNotification();
+                card.setBaseRestOfAttempts();
+                return true;
+            }
+            else {
+                card.decreaseRestOfAttempts();
+                if (View.pinCodeInputMenu()) {
+                    return true;
                 }
-                else {
-                    card.decreaseRestOfAttempts();
-                    if(View.pinCodeInputMenu()){
-                        return card;
-                    }
+                else{
+                    return false;
                 }
-            } while (card.getRestOfAttempts() > 0);
-            BlockedCard blockedCard = BlockingControl.block(card);
-            return blockedCard;
+            }
         }
         catch (Exception e){
             System.out.println(e.getMessage());
-            return null;
+            if (View.pinCodeInputMenu()) {
+                return true;
+            }
+            else{
+                return false;
+            }
         }
     }
 
