@@ -10,6 +10,8 @@ import com.mycompany.atm.card.information.PinCode;
 import java.util.Scanner;
 
 public class MyScanner {
+    public static boolean isPinCodeInputContinue = true;
+
     public static CardNumber inputCardNumber(){
         do {
             try {
@@ -35,9 +37,11 @@ public class MyScanner {
             else {
                 card.decreaseRestOfAttempts();
                 if (View.pinCodeInputMenu()) {
+                    isPinCodeInputContinue = false;
                     return true;
                 }
                 else{
+                    isPinCodeInputContinue = true;
                     return false;
                 }
             }
@@ -45,9 +49,11 @@ public class MyScanner {
         catch (Exception e){
             System.out.println(e.getMessage());
             if (View.pinCodeInputMenu()) {
+                isPinCodeInputContinue = false;
                 return true;
             }
             else{
+                isPinCodeInputContinue = true;
                 return false;
             }
         }

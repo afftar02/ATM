@@ -40,21 +40,21 @@ public class Atm {
             if (card.getNumber().isCorrectFormat() && card.getNumber().isExists()) {
                 card = Data.dataGetting(card);
                 if (card.getClass() != BlockedCard.class) {
-                    do {
-                        if(MyScanner.isInputPinCode(card)){
+                    while (card.getRestOfAttempts() > 0) {
+                        if (MyScanner.isInputPinCode(card)) {
                             return card;
                         }
-                    }while (card.getRestOfAttempts() > 0);
+                    }
                     BlockedCard blockedCard = BlockingControl.block(card);
                     return blockedCard;
                 } else {
                     if (BlockingControl.isBlockTimeOver((BlockedCard) card)) {
                         card = BlockingControl.unblock((BlockedCard) card);
-                        do {
+                        while (card.getRestOfAttempts() > 0) {
                             if(MyScanner.isInputPinCode(card)){
                                 return card;
                             }
-                        }while (card.getRestOfAttempts() > 0);
+                        }
                         BlockedCard blockedCard = BlockingControl.block(card);
                         return blockedCard;
                     } else {
