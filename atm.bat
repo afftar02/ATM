@@ -1,0 +1,1 @@
+java -jar C:\Users\Nikita\IdeaProjects\Cash_Machine\out\artifacts\Cash_Machine_jar\Cash_Machine.jar
