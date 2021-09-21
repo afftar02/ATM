@@ -1,8 +1,6 @@
 package com.mycompany.atm.input;
 
 import com.mycompany.atm.view.View;
-import com.mycompany.atm.blocking.BlockingControl;
-import com.mycompany.atm.card.BlockedCard;
 import com.mycompany.atm.card.Card;
 import com.mycompany.atm.card.information.CardNumber;
 import com.mycompany.atm.card.information.PinCode;
@@ -36,12 +34,16 @@ public class MyScanner {
             }
             else {
                 card.decreaseRestOfAttempts();
-                if (View.pinCodeInputMenu()) {
-                    isPinCodeInputContinue = false;
-                    return true;
+                if(card.getRestOfAttempts()>0) {
+                    if (View.pinCodeInputMenu()) {
+                        isPinCodeInputContinue = false;
+                        return true;
+                    } else {
+                        isPinCodeInputContinue = true;
+                        return false;
+                    }
                 }
                 else{
-                    isPinCodeInputContinue = true;
                     return false;
                 }
             }

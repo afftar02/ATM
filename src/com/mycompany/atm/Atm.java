@@ -1,6 +1,6 @@
 package com.mycompany.atm;
 
-import com.mycompany.atm.blocking.BlockingControl;
+import com.mycompany.atm.control.BlockingControl;
 import com.mycompany.atm.card.BlockedCard;
 import com.mycompany.atm.card.Card;
 import com.mycompany.atm.data.Data;

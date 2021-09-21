@@ -1,4 +1,4 @@
-package com.mycompany.atm.blocking;
+package com.mycompany.atm.control;
 
 import com.mycompany.atm.view.View;
 import com.mycompany.atm.card.BlockedCard;
